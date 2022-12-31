@@ -9,7 +9,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }))
 
 async function connection() {
-	await mongoose.connect(`${MONGO_URL}`);
+	await mongoose.connect(`${process.env.MONGO_URL}`);
 }
 
 connection().catch(err => console.log(err));
