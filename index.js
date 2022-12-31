@@ -9,7 +9,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }))
 
 async function connection() {
-	await mongoose.connect(MONGODB_URI);
+	await mongoose.connect(process.env.MONGODB_URI);
 }
 
 connection().catch(err => console.log(err));
@@ -26,7 +26,7 @@ app.get('/', function (req, res) {
 	res.send(`<h1> HOME </h1>
 		<a href='/list'> List </a>
 		<a href='/create'> Create </a>
-		`)
+	`)
 })
 
 app.get('/list', async function (req, res) {
@@ -36,14 +36,14 @@ app.get('/list', async function (req, res) {
 
 	<a href='/list'> List </a>
 	<a href='/create'> Create </a>
-	<ul>`;
+			<ul>`;
 	characters.forEach(char => {
 		list += `<li>
-		<p> <strong>${char.name}</strong> - ${char.color}</p>
+					<p> <strong>${char.name}</strong> - ${char.color}</p>
 
-		<a href='/delete/${char.id}'> Delete </a>
-		<a href='/update/${char.id}'> Update </a>
-		</li>`
+					<a href='/delete/${char.id}'> Delete </a>
+					<a href='/update/${char.id}'> Update </a>
+				</li>`
 	});
 	list += `</ul>`
 
@@ -56,17 +56,17 @@ app.get('/create', function (req, res) {
 
 	<form action="/save-character" method="post">
 	<field>
-	<label for="name">Name:</label>
-	<input type="text" id="name" name="name">
+		<label for="name">Name:</label>
+		<input type="text" id="name" name="name">
 	</field>
 
 	<field>
-	<label for="color">Color:</label>
-	<input type="text" id="color" name="color">
+		<label for="color">Color:</label>
+		<input type="text" id="color" name="color">
 	</field>
 
 	<input type="submit" value="Save Character">
-	</form>`
+  	</form>`
 
 	res.send(form);
 
@@ -89,7 +89,7 @@ app.post('/save-character', (req, res) => {
 		<a href='/list'> List </a>
 		<a href='/create'> Create </a>
 
-		`)
+	`)
 
 });
 
@@ -106,17 +106,17 @@ app.get('/update/:id', async function (req, res) {
 
 	<form action="/update-character/${req.params.id}" method="post">
 	<field>
-	<label for="newName">Name:</label>
-	<input type="text" placeholder="${char.name}" id="name" name="newName">
+		<label for="newName">Name:</label>
+		<input type="text" placeholder="${char.name}" id="name" name="newName">
 	</field>
 
 	<field>
-	<label for="newColor">Color:</label>
-	<input type="text" placeholder="${char.color}" id="color" name="newColor">
+		<label for="newColor">Color:</label>
+		<input type="text" placeholder="${char.color}" id="color" name="newColor">
 	</field>
 
 	<input type="submit" value="Update Character">
-	</form>`
+  	</form>`
 
 	res.send(updateForm);
 
@@ -143,5 +143,5 @@ app.post('/update-character/:id', async function (req, res) {
 		<a href='/list'> List </a>
 		<a href='/create'> Create </a>
 
-		`)
+	`)
 });
