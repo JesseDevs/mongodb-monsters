@@ -1,12 +1,14 @@
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 import express from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
-import * as dotenv from 'dotenv';
 
-dotenv.config();
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use(cors());
 
 async function connection() {
 	const endpoint = process.env.MONGO_URL;
