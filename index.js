@@ -1,7 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
-import dotenv from 'dotenv';
+import * as dotenv from 'dotenv';
 
 dotenv.config();
 
@@ -9,7 +9,8 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }))
 
 async function connection() {
-	await mongoose.connect(`${process.env.MONGO_URL}`);
+	const endpoint = process.env.MONGO_URL;
+	await mongoose.connect(endpoint);
 }
 
 connection().catch(err => console.log(err));
@@ -21,7 +22,7 @@ const ninSchema = new mongoose.Schema({
 });
 const Character = mongoose.model('Character', ninSchema);
 
-app.listen(1111);
+app.listen(process.env.PORT);
 app.get('/', function (req, res) {
 	res.send(`<h1> HOME </h1>
 		<a href='/list'> List </a>
