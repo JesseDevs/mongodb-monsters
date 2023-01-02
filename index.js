@@ -10,7 +10,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 async function connection() {
 	const endpoint = process.env.MONGO_URL;
-	await mongoose.connect(endpoint);
+	const railEndpoint = 'mongodb://mongo:pruRgiQKv5b4GK2myxMf@containers-us-west-165.railway.app:5791'
+	await mongoose.connect(railEndpoint);
 }
 
 connection().catch(err => console.log(err));
