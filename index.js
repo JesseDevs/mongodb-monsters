@@ -56,9 +56,8 @@ app.get('/list', async function (req, res) {
 })
 
 app.get('/characters', async function (req, res) {
-	await Character.find({}, function (err, characters) {
-		res.send(characters)
-	})
+	await Character.find()
+	res.send(Character)
 })
 
 app.get('/create', function (req, res) {
