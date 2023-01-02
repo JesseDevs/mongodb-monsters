@@ -38,6 +38,7 @@ app.get('/list', async function (req, res) {
 
 	var list = `<h1> All Characters </h1>
 
+	<a href='/'> Home </a>
 	<a href='/list'> List </a>
 	<a href='/create'> Create </a>
 	<ul>`;
@@ -54,9 +55,19 @@ app.get('/list', async function (req, res) {
 	res.send(list)
 })
 
+app.get('/characters', async function (req, res) {
+	await Character.find({}, function (err, characters) {
+		res.send(characters)
+	})
+})
+
 app.get('/create', function (req, res) {
 
 	const form = `
+
+	<a href='/'> Home </a>
+	<a href='/list'> List </a>
+	<a href='/create'> Create </a>
 
 	<form action="/save-character" method="post">
 	<field>
@@ -90,8 +101,9 @@ app.post('/save-character', (req, res) => {
 		<em> Their color is ${character.color} </em>
 		<p> Character Added! </p>
 
-		<a href='/list'> List </a>
-		<a href='/create'> Create </a>
+<a href='/'> Home </a>
+	<a href='/list'> List </a>
+	<a href='/create'> Create </a>
 
 		`)
 
