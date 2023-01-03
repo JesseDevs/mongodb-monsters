@@ -11,9 +11,19 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cors());
 
 async function connection() {
-	const endpoint = process.env.MONGO_URL;
-	const railEndpoint = 'mongodb://mongo:pruRgiQKv5b4GK2myxMf@containers-us-west-165.railway.app:5791'
-	await mongoose.connect(railEndpoint);
+	var environment = process.env.NODE_ENV;
+	let endpoint = '';
+
+	if (environment === 'development') {
+
+		endpoint = process.env.LOCAL_DATABASE
+	}
+	else {
+
+		endpoint = process.env.LIVE_DATABASE
+	}
+
+	await mongoose.connect(endpoint);
 }
 
 connection().catch(err => console.log(err));
