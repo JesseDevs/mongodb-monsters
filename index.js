@@ -33,6 +33,12 @@ app.get('/', function (req, res) {
 		`)
 })
 
+app.post('/add', async function (req, res) {
+	const character = new Character(req.body);
+	await character.save();
+	res.redirect('/');
+});
+
 app.get('/list', async function (req, res) {
 	const characters = await Character.find();
 
