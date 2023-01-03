@@ -94,25 +94,10 @@ app.get('/create', function (req, res) {
 
 })
 
-app.post('/save-character', (req, res) => {
-	const character = new Character({
-		name: req.body.name,
-		color: req.body.color,
-		active: false
-	})
-
-	character.save();
-	res.send(`
-
-		<h1> ${character.name} </h1>
-		<em> Their color is ${character.color} </em>
-		<p> Character Added! </p>
-
-<a href='/'> Home </a>
-	<a href='/list'> List </a>
-	<a href='/create'> Create </a>
-
-		`)
+app.post('/save-character', async (req, res) => {
+	const character = new Character(req.body);
+	await character.save();
+	res.redirect('/');
 
 });
 
