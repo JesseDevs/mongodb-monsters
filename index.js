@@ -22,12 +22,17 @@ async function connection() {
 		port = ':' + MONGOPORT;
 	}
 
-	let options = '';
+	let options = '?';
 	if (MONGO_OPTIONS) {
-		options = MONGO_OPTIONS;
+		options += MONGO_OPTIONS;
 	}
 
-	let endpoint = `${base}://${MONGOUSER}:${MONGOPASSWORD}${MONGOHOST}${port}${options}`;
+	// let databaseName = '';
+	// if (MONGO_DATABASE) {
+	// 	databaseName = MONGO_DATABASE + '?authSource=' + MONGO_DATABASE
+	// }
+
+	let endpoint = `${base}://${MONGOUSER}:${MONGOPASSWORD}@${MONGOHOST}${port}${options}`;
 
 	console.log(endpoint)
 	await mongoose.connect(endpoint);
