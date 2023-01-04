@@ -22,11 +22,6 @@ async function connection() {
 		port = ':' + MONGOPORT;
 	}
 
-	// let options = '?';
-	// if (MONGO_OPTIONS) {
-	// 	options += MONGO_OPTIONS;
-	// }
-
 	let databaseName = '';
 	if (MONGO_DATABASE) {
 		databaseName = '/' + MONGO_DATABASE;
@@ -34,7 +29,6 @@ async function connection() {
 
 	let endpoint = `${base}://${MONGOUSER}:${MONGOPASSWORD}@${MONGOHOST}${port}${databaseName}`;
 
-	console.log(endpoint)
 	await mongoose.connect(endpoint);
 }
 
@@ -116,14 +110,13 @@ app.get('/create', function (req, res) {
 })
 
 app.post('/save-character', async (req, res) => {
-	if (req.body) {
-		const character = new Character(req.body);
-		await character.save();
-		res.send("Added");
-	} else {
-		res.send("No data received");
-	}
-
+	const character = new Character({
+		name: req.params.name,
+		color: req.params.color,
+		active: false
+	})
+	await character.save();
+	res.send("Added");
 });
 
 app.get('/delete/:id', async function (req, res) {
