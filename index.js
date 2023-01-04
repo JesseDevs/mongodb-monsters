@@ -11,18 +11,25 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cors());
 
 async function connection() {
-	var environment = process.env.NODE_ENV;
-	let endpoint = '';
+	let { MONGO_BASE: base, MONGOUSER, MONGOPASSWORD, MONGOHOST, MONGOPORT, MONGO_OPTIONS } = process.env;
 
-	if (environment === 'development') {
-
-		endpoint = process.env.LOCAL_DATABASE
-	}
-	else {
-
-		endpoint = process.env.LIVE_DATABASE
+	if (!base) {
+		base = "mongodb"
 	}
 
+	let port = "";
+	if (MONGOPORT) {
+		port = ':' + MONGOPORT;
+	}
+
+	let options = '';
+	if (MONGO_OPTIONS) {
+		options = MONGO_OPTIONS;
+	}
+
+	let endpoint = `${base}://${MONGOUSER}:${MONGOPASSWORD}${MONGOHOST}${port}${options}`;
+
+	console.log(endpoint)
 	await mongoose.connect(endpoint);
 }
 
