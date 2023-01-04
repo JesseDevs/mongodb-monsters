@@ -110,11 +110,7 @@ app.get('/create', function (req, res) {
 })
 
 app.post('/save-character', async (req, res) => {
-	const character = new Character({
-		name: req.params.name,
-		color: req.params.color,
-		active: false
-	})
+	const character = new Character(req.body);
 	await character.save();
 	res.send("Added");
 });
