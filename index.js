@@ -87,7 +87,6 @@ app.get('/characters', function (req, res) {
 	Character.find({}, function (err, characters) {
 		res.send(characters)
 	})
-
 })
 
 app.get('/create', function (req, res) {
@@ -119,7 +118,6 @@ app.get('/create', function (req, res) {
 app.post('/save-character', async (req, res) => {
 	const character = new Character(req.body);
 	await character.save();
-	res.redirect('/');
 
 });
 
