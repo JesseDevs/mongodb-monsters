@@ -118,7 +118,7 @@ app.get('/create', function (req, res) {
 app.post('/save-character', async (req, res) => {
 	const character = new Character(req.body);
 	await character.save();
-	res.send(Added);
+	res.send("Added");
 });
 
 app.get('/delete/:id', async function (req, res) {
